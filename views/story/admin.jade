@@ -1,0 +1,36 @@
+extends ../layout
+block head
+  title= "mon titre"
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-2.2.3.min.js', integrity='sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=', crossorigin='anonymous')
+block content
+  h1 Story Creation Panel
+  p Edit my story : #{story.title}
+  section(id='add-page')
+    form(id='add-page-form', method='POST', action='/story/add-page/'+story.ioNsp)
+      div.input
+        span.label Title
+        input(type="text", name="addPageTitle", value="page 1")
+        span.label Text
+        input(type="text", name="addPageText", value="text 1")
+      div.actions
+        input(type="submit", id="add-page-submit" value="add page")
+  section(id='list-pages')
+    ul
+    each page in story.pages
+      li
+        a(href="/story/edit-page/"+story.ioNsp+"/"+page.createdIndex) Edit page #{page.title}
+  script(type='text/javascript').
+    //$(function() {
+    //  var socket = io("/#{story.ioNsp}");
+      //- $("#add-page").click(function(e){
+      //-   e.preventDefault();
+      //-   var page = {
+      //-     title : $("#page-title").val(),
+      //-     text  : $("#page-text").val(),
+      //-   };
+      //-   console.log(page);
+      //-   socket.emit('add-page', page);
+      //- });
+  //  });

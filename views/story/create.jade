@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h1= title
+  form(name="create-story", method="post")
+    div.input
+      span.label Title
+      input(type="text", name="title", value="Story 1")
+    div.actions
+      input(type="submit", value="create")

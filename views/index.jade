@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Story Creator
+  section(id="player")
+    h3 Play to a story 
+    ul
+      each val, key  in stories
+        li
+          a(href="story/play/"+val.story.ioNsp) Play to #{val.story.title}
+  section(id="creator")
+    h3 Create or edit a story
+    a(href="story/create") Create a new story
+    ul
+      each val, key  in stories
+        li
+          a(href="story/edit/"+val.story.ioNsp) Edit #{val.story.title}

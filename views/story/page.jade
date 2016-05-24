@@ -1,0 +1,32 @@
+extends ../layout
+block head
+  title= "Edit story"
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-2.2.3.min.js', integrity='sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=', crossorigin='anonymous')
+block content
+  section(id='page-description')
+    h1 Story Creation Panel
+    h2 Edit my page : #{page.title}
+    p=page.text
+  section(id='add-solution')
+    form(id='add-solution-form', method='POST', action='/story/edit-page/add-solution/'+story.ioNsp+'/'+page.createdIndex)
+      div.input
+        input(type="text", name="addSolutionText", value="soluce 1")
+      div.actions
+        input(type="submit", id="add-solution-submit" value="add solution")
+  section(id='list-solutions')
+    each solution in page.solutions
+      div
+        h5 Solution #{solution.text}
+        if solution.targetPageIndex
+          p link to page index #{solution.targetPageIndex}
+        else
+          p no page linked yet
+        form(method='post', action='/story/edit-page/link-solution/'+story.ioNsp+'/'+page.createdIndex+'/'+solution.createdIndex)
+          select(name='pageToLink')
+            each pageOfStory in story.pages
+              option(value=pageOfStory.createdIndex) #{pageOfStory.title}
+          input(type="submit", value="link a page")
+              
+  

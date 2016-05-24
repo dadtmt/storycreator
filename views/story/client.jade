@@ -1,0 +1,60 @@
+extends ../layout
+block head
+  title= "Jouer à "+story.title
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-2.2.3.min.js', integrity='sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=', crossorigin='anonymous')
+block content
+  h1 Story Playing Panel
+  p Play to story : #{story.title}
+  section(id='display-page')
+    div.waiting Waiting for the page
+  script(type='text/javascript').
+    $(function() {
+      
+      //stores the currentPage : last page received
+      //var currentPage = 0;
+      
+      /**
+       * Add a solution button in the current page div.solutions
+       * When a solution button is clicked :
+       * 	emits choose-solution
+       * 	append a div.waiting to #display-page
+       * @param {[type]} solution [description]
+       */
+      function buildSolutionButton(solution) {
+        console.log("addsolution"+solution.createdIndex);
+        var solutionButton = $("<button>"+solution.text+"</button>");
+        solutionButton.click(function(){
+          console.log('choose-solution' + solution.createdIndex);
+          socket.emit('choose-solution', solution);
+          $(".currentPage .solutions button").attr('disabled', 'disabled');
+          $(".currentPage").removeClass("currentPage");
+          //add a waiting div for the next page
+          $('#display-page').append("<div class='waiting'>Waiting for the page</div>");
+        });
+        return solutionButton;
+      }
+      
+      //connect to houston
+      var socket = io("/#{story.ioNsp}");
+      //listen for serve-page : receive  page and add its content to div.waiting
+      //waiting class is removed
+      socket.on("serve-page",function(page){
+        //currentPage = page;
+        
+        console.log("addpage"+page.title);
+        var waitingDiv = $("div.waiting");
+        waitingDiv.html("<h3>"+page.title+"</h3><p>"+page.text+"</p><div class='solutions'></div>");
+        waitingDiv.addClass("currentPage");
+        waitingDiv.append($("<div class='soltions'></div>"));
+        $.each(page.solutions, function(index, solution){
+          $(".currentPage .solutions").append(buildSolutionButton(solution));
+        });
+        
+        waitingDiv.removeClass("waiting");
+      });
+      socket.on("add-solution",function(solution){
+        $(".currentPage .solutions").append(buildSolutionButton(solution));
+      });
+    });
