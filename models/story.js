@@ -1,33 +1,44 @@
-var snake = require('to-snake-case');
+'use strict'
 
-function Story(title){
-  this.title = title;
-  this.ioNsp = snake(title);
-  this.pages = {};
-  this.nbPagesAdded = 0;
-};
+const snake = require('to-snake-case');
 
-Story.prototype.addPage = function(page){
-  this.nbPagesAdded++;
-  page.createdIndex = this.nbPagesAdded;
-  this.pages[page.createdIndex] = page;
+/**
+ * Story model
+ */
+class Story {
+
+  /**
+   * Instantiate a Story
+   * @param  string title Story title
+   * @return void
+   */
+  constructor(title) {
+    this.title = title;
+    this.ioNsp = snake(title);
+    this.pages = {};
+    this.nbPagesAdded = 0;
+  }
+
+  /**
+   * Add a Page to the story
+   * Set the page index
+   * @param Page page a page to add
+   * @return void
+   */
+  addPage(page) {
+    this.nbPagesAdded++;
+    page.createdIndex = this.nbPagesAdded;
+    this.pages[page.createdIndex] = page;
+  }
+
+  /**
+   * Get the page room name
+   * @param  int pageIndex the page index
+   * @return string          the page room name
+   */
+  getPageRoomName(pageIndex) {
+    return this.ioNsp+"-"+pageIndex;
+  }
 }
-
-Story.prototype.getPageRoomName = function(pageIndex){
-  return this.ioNsp+"-"+pageIndex;
-}
-
-
-//get a room name based on choosen solution, if no choosen solution give a room name for the first page
-// Story.prototype.getSolutionRoomName = function(solution){
-//   if (!solution) {
-//     return this.ioNsp+'-1'
-//   }
-//   return this.ioNsp+'-'+solution.parentPage.createdIndex+'-'+solution.createdIndex;
-// }
-//
-// Story.prototype.getChoosenSolutionRoomName = function(){
-//   return this.getSolutionRoomName(this.playerChoosenSolution);
-// }
 
 module.exports = Story;

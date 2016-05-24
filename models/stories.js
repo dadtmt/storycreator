@@ -1,9 +1,11 @@
 var storyHandlers = {};
-exports.getStories = function(){
+
+exports.getStoryHandlers = function(){
   //not working of course
   return storyHandlers;
 }
-exports.addStory = function(storyHandler){
+exports.addStoryHandler = function(storyHandler){
+  console.log(storyHandler.story.ioNsp);
   storyHandlers[storyHandler.story.ioNsp] = storyHandler;
   return storyHandler;
 }

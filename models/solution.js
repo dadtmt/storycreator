@@ -1,13 +1,29 @@
-function Solution(text){
-  this.text = text;
-  //needed??? cannot be sent via socket
-  //this.parentPage = parentPage;
-  this.targetPageIndex = "";
-  this.createdIndex = 0;
-}
+'use strict'
 
-Solution.prototype.linkPage = function(page){
-  this.targetPageIndex = page.createdIndex;
+/**
+ * Solution model
+ */
+class Solution {
+
+  /**
+   * Instantiate a Solution
+   * @param  string text Solution text
+   * @return void
+   */
+  constructor(text) {
+    this.text = text;
+    this.targetPageIndex = "";
+    this.createdIndex = 0;
+  }
+
+  /**
+   * link a page to the solution
+   * @param  Page page the target page
+   * @return void
+   */
+  linkPage(page) {
+    this.targetPageIndex = page.createdIndex;
+  }
 }
 
 module.exports = Solution;
