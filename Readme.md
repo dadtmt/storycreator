@@ -1,0 +1,51 @@
+# StoryCreator
+
+Node.js app using [Express 4](http://expressjs.com/).
+
+## Running Locally
+
+Make sure you have [Node.js](http://nodejs.org/) installed.
+
+```sh
+git clone git@github.com:myproject # or clone your own fork
+cd storycreator
+npm install
+npm start
+```
+
+Your app should now be running on [localhost:1337](http://localhost:1337/).
+
+## Principles
+
+### Creator role
+
+A creator creates a story.
+
+A story is made of pages.
+
+A page contains many solutions.
+
+Each solution leads to a target page.
+
+### Player role
+
+A player plays a story.
+
+He gets the first page and then click on a solution that will display the target page.
+
+When a player asks for a page or click a solution, the page may not exist or the solution may not have a target page. In this case the StoryHandler class will serve the page when the creator will create the page or link a target page to the solution.
+
+## What is working
+
+- Story creation with pages and solutions
+- Playing to story
+
+## Issues to fix in near future
+
+- Make models class ES6
+- Write proper tests in StoryHandler and indexController (find a test framework)
+
+## Next tasks
+
+- Show to the story creator the players actions
+- MongoDb
