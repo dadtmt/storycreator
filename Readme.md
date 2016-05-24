@@ -42,8 +42,9 @@ When a player asks for a page or click a solution, the page may not exist or the
 
 ## Issues to fix in near future
 
-- Make models class ES6
+- StoryController should not instantiate story, page or solution => make factories used in StoryHandler
 - Write proper tests in StoryHandler and indexController (find a test framework)
+- indexCreated should be named id (indexCreated wtf)
 
 ## Next tasks
 
