@@ -2,7 +2,7 @@
 var Page = require('../models/page');
 var Stories = require('../models/stories');
 var Story = require('../models/story');
-var Solution = require('../models/solution')
+var Solution = require('../models/solution');
 var StoryHandler = require('../handlers/story');
 
 /**
@@ -12,7 +12,7 @@ exports.create = function(req, res, next) {
   var story = new Story(req.body.title);
   var storyHandler = new StoryHandler(story);
   storyHandler.connection();
-  Stories.addStory(storyHandler);
+  Stories.addStoryHandler(storyHandler);
   res.render('story/admin', {
     story : story
   });
@@ -22,7 +22,7 @@ exports.create = function(req, res, next) {
  * Edit a story
  */
 exports.edit = function(req, res, next) {
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Not found');
   }
@@ -33,7 +33,7 @@ exports.edit = function(req, res, next) {
  * Add page
  */
 exports.addPage = function(req, res, next) {
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Not found');
   }
@@ -46,7 +46,7 @@ exports.addPage = function(req, res, next) {
  * Edit page
  */
 exports.editPage = function(req, res, next) {
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Story Not found');
   }
@@ -61,7 +61,7 @@ exports.editPage = function(req, res, next) {
  * Add Solution
  */
 exports.addSolution = function(req, res, next) {
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Story Not found');
   }
@@ -79,7 +79,7 @@ exports.addSolution = function(req, res, next) {
 
 exports.linkSolutionPage = function(req, res, next) {
 
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Story Not found');
   }
@@ -100,7 +100,7 @@ exports.linkSolutionPage = function(req, res, next) {
  * Handle a client request to play a story
  */
 exports.play = function(req, res, next) {
-  var storyHandler  = Stories.getStories()[req.params.story];
+  var storyHandler  = Stories.getStoryHandlers()[req.params.story];
   if (storyHandler == null){
     res.status(404).send('Story Not found');
   }
@@ -110,7 +110,7 @@ exports.play = function(req, res, next) {
 };
 
 exports.chooseSolution = function(req, res, next) {
-  var story  = Stories.getStories()[req.params.story];
+  var story  = Stories.getStoryHandlers()[req.params.story];
   var page = story.pages[req.params.page];
   var solution = page.solutions[req.params.page];
   if (story == null || page == null || solution == null){
